@@ -15,11 +15,18 @@ app.use(express.bodyParser());
 app.use(app.router);
 app.use(express.static(__dirname));
 
-http.createServer(app).listen(3002);
+// app).listen(3002);
 //.listen(3002); //test purpose
 
 app.get('/', function(req, res) {
 	res.render('index.html');
 });
+
+
+if(!module.parent) {
+	http.createServer(app).listen(3002, function(){
+		console.log('Express server listening on port ' + 3002);
+	});
+}
 
 exports.app = app;

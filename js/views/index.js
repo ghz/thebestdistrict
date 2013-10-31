@@ -159,19 +159,21 @@ define([
                     }
 
                     quartiers[l].note = note_quartier;
+                    quartiers[l].note_format = parseInt(10 - 10*note_quartier);
                 }
 
                 quartiers = _.sortBy(quartiers, function(q){ return q.note; });
 
-                
-                this.bestDistricts = quartiers.splice(0, this.nb_quartiers_affiches);
+                this.bestDistricts = quartiers;
+
                 this.domDistricts();
+
             },
             domDistricts : function() {
                 $('#results').empty().append('<ol />');
 
-                for(var i in this.bestDistricts)
-                    $('#results ol').delay(i*100).append('<li>'+this.bestDistricts[i]['nom']+'</li>');
+                for(var i = 0; i < this.nb_quartiers_affiches; i++)
+                    $('#results ol').append('<li>'+this.bestDistricts[i]['nom']+' '+ this.bestDistricts[i]['note_format']+'/10</li>');
                 
             }
           

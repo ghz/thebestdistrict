@@ -11,6 +11,7 @@ require.config({
         "videojs": "libs/video-js/video",
         "BigVideo": "libs/BigVideo/lib/bigvideo",
         "jquery-ui": "libs/jquery-ui/ui/jquery-ui",
+        "jquery.touchpunch": "libs/jquery.touchpunch",
         "imagesloaded": "libs/imagesloaded/imagesloaded",
         "eventEmitter/EventEmitter": "libs/eventEmitter/EventEmitter",
         "eventie/eventie": "libs/eventie/eventie"
@@ -42,7 +43,7 @@ require.config({
         {
             'deps': ['underscore']
         },
-        'jquery-ui' : { 'deps' : ['jquery'] },
+        'jquery-ui' : { 'deps' : ['jquery', 'jquery.touchpunch'] },
 
         //jQuery UI Components
         //----------------------------------------
