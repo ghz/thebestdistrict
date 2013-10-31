@@ -42,6 +42,7 @@ require.config({
         {
             'deps': ['underscore']
         },
+        'jquery-ui' : { 'deps' : ['jquery'] },
 
         //jQuery UI Components
         //----------------------------------------

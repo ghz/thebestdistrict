@@ -15,7 +15,7 @@ app.use(express.bodyParser());
 app.use(app.router);
 app.use(express.static(__dirname));
 
-http.createServer(app);
+http.createServer(app).listen(3002);
 //.listen(3002); //test purpose
 
 app.get('/', function(req, res) {

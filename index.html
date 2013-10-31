@@ -33,16 +33,60 @@ TheBestDistrict.com - The best way to find a home that really suits us !
     <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:300,400|Marck+Script|Open+Sans' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" media="screen" href="css/style.css" />
+    <style type="text/css">
+    form#search {
+      width:90%;
+      margin:0 auto;
+    }
+    span.value {
+      display: none;
+    }
+    #sliders {
+      margin:0;padding:0;
+      margin-bottom: 50px;
+      list-style-type: none;
+    }
+    #sliders li {
+      margin:0; padding:0;
+    }
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="js/libs/jquery-ui/themes/overcast/jquery-ui.css">
 
     <script type="text/javascript" src="js/libs/modernizr.custom.js"></script>
     <script type="text/javascript" src="js/libs/fastclick.js"></script>
 </head>
-<body>
+<body id="app">
     <div class="main">
         <header>
             <h2>The</h2>
             <h1>Best District</h1>
         </header>
+        <form method="POST" id="search">
+          <ul id="sliders">
+              <li>
+                  <h4>Education</h4>
+                  <div class="slider">25</div>
+                  <span class="value">0</span>
+              </li>
+              <li>
+                  <h4>Transports</h4>
+                  <div class="slider">25</div>
+                  <span class="value" >0</span>
+              </li>
+              <li>
+                  <h4>Environnement</h4>
+                  <div class="slider">25</div>
+                  <span class="value">0</span>
+              </li>
+              <li>
+                  <h4>Culture et loisirs</h4>
+                  <div class="slider">25</div>
+                  <span class="value">0</span>
+              </li>
+          </ul>
+          <input type="button" class="submit-search" value="Rechercher le quartier qui me correspond !">
+        </form>
     </div>
     <script type="text/javascript" data-main="js/main" src="js/require-jquery.js"></script>
     <script>
