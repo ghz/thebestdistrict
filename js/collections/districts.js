@@ -7,7 +7,13 @@ define([
         model: District,
 
         url: function() {
-            return '';
+            return 'http://api.batcave.stras.io:3001/e/' + this.endpointId;
+
+        },
+        initialize: function(endpointId) {
+        	this.endpointId = endpointId;
+        	this.fetch();
         }
+
     });
 });

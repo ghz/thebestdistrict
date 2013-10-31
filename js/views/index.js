@@ -1,3 +1,21 @@
+/**
+* Similar to _.find but return the first index of the array matching the iterator
+**/
+var findIndex = function(arr, iterator) {
+    var i = arr.length - 1, index = null;
+
+    if(i >= 0){
+        do {
+            if(iterator(arr[i])) {
+                index = i;
+                break;
+            }
+        } while(i--)
+    }
+
+    return index;
+}
+
 define([
     'backbone',
     'models/district',
@@ -19,20 +37,28 @@ define([
 
             initialize: function()
             {
-                this.districts = new Districts();
-                this.count = 3;
+                this.districtSortByEducation = new Districts('07fc');
+                this.districtSortByTransport = new Districts('02Pi');
+                this.districtSortByHobbies = new Districts('m58t');
+                this.districtSortByEcology = new Districts('r41k');
+
+                this.nb_quartiers_affiches = 4;
+
                 this.render();
                 this._events();
             },
 
             events : {
-                'click .submit-search' : 'send',
+                'click .submit-search' : 'getResult',
             },
 
             _events : function() {
-                var self = this;
-                this.districts.bind('add', this.added, this);
-          },
+                // var self = this;
+                // this.districtSortByEducation.bind('add', this.added, this);
+                // this.districtSortByTransport.bind('add', this.added, this);
+                // this.districtSortByHobbies.bind('add', this.added, this);
+                // this.districtSortByEcology.bind('add', this.added, this);
+            },
 
             render: function() {
 
@@ -99,80 +125,54 @@ define([
                     });
                 });
             },
-            send : function() {
-
-                var endpoints = ['07fc','02Pi','m58t','r41k'], l = endpoints.length;
-
-               // note finale = (c1 * (p1/15) + c2 * (p2/15) + c3 * (p3/15) + c4 * (p4/15))
-               /*
-               
-[31/10/13 16:02:46] Gilles Humez: c = coeef
-p = position dans la liste
-
-note_finale_quatier_1 = (c_edu * (position_dans_la_liste_edu_de_quartier_1/15) + c_transp * (position_dans_la_liste_transport_de_quartier_1/15) + ...
-[31/10/13 16:03:59] Gilles Humez: scom une moyenne
-
-1er trimettre = 14,6 en maths * coeff_maths + ...
-[31/10/13 16:04:03] soyuka: position_dans_la_liste_edu_de_quartier_1 => ça veut rien dire ça ?! je la trouve où cette position ?
-[31/10/13 16:04:25] Gilles Humez: les 4 endpoints sont rangés différemment nn ?
-[31/10/13 16:04:28] soyuka: yep
-[31/10/13 16:04:40] Gilles Humez: on suppose que le 1er = le best
-
-                */
-                while(l--) {
-                    this.districts.url = "http://api.batcave.stras.io:3001/e/" + endpoints[l];
-                    this.districts.fetch();
-                }
-               
-            },
-            added : function(res) {
-                this.count--;
-
-                if(this.count == 0)
-                    this.getResult();
-            },
             getResult : function() {
                 this.count = 3;
 
                 var sliders = $("#sliders .slider");
                 
-                var coeffs = [];
-
-                // var sum = 0;
-                // sum += $(this).slider('value');
+                var coeffs = [], 
+                    districts = [
+                        this.districtSortByEducation.first().attributes.results,
+                        this.districtSortByTransport.first().attributes.results,
+                        this.districtSortByHobbies.first().attributes.results,
+                        this.districtSortByEcology.first().attributes.results,
+                    ];
 
                 sliders.each(function(i) {
                     coeffs.push($(this).slider('value') / 100);
                 });
 
-                console.log(this.districts);
-                //For each districts
-                // var j = this.districts.length;
+                //Choisir ou rand ?
+                var quartiers = districts[_.random(0, 3)], l = quartiers.length;
 
-                // while(j--) {
-                //     //for each district
-                //     var district = this.districts[j], l = district.models[0].attributes.results.length;
-                //     console.log(district.models[0].attributes.results);
-                //     while(l--) {
+                //Sort ?
+                // quartiers = _.sortBy(quartiers, function(q){ return parseInt(q.id_quartier); });
 
-                //     }
+                //ajout des notes sur es quartiers
+                while(l--) {
+                    var q_id = quartiers[l].id_quartier;
 
-                // }
+                    var note_quartier = 0;
 
+                    for(var i in coeffs) {
+                        note_quartier += coeffs[i] * ( findIndex(districts[i], function(val) { return parseInt(val.id_quartier) == q_id }) / 15 );
+                    }
 
-                    // while(l--) {
-                    //     note_finale += coef * (l+1)/15
-                    // }
+                    quartiers[l].note = note_quartier;
+                }
 
-                // var l = this.districts.
+                quartiers = _.sortBy(quartiers, function(q){ return q.note; });
 
-                    // var l = this.districts.length;
+                
+                this.bestDistricts = quartiers.splice(0, this.nb_quartiers_affiches);
+                this.domDistricts();
+            },
+            domDistricts : function() {
+                $('#results').empty().append('<ol />');
 
-                    // while(l--) {
-
-                    // }
-                    // 
-                    // 
+                for(var i in this.bestDistricts)
+                    $('#results ol').delay(i*100).append('<li>'+this.bestDistricts[i]['nom']+'</li>');
+                
             }
           
         });
