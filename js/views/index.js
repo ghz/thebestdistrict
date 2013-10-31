@@ -42,7 +42,7 @@ define([
                 this.districtSortByHobbies = new Districts('m58t');
                 this.districtSortByEcology = new Districts('r41k');
 
-                this.nb_quartiers_affiches = 4;
+                this.nb_quartiers_affiches = 3;
 
                 this.render();
                 this._events();
