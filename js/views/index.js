@@ -1,21 +1,3 @@
-/**
-* Similar to _.find but return the first index of the array matching the iterator
-**/
-var findIndex = function(arr, iterator) {
-    var i = arr.length - 1, index = null;
-
-    if(i >= 0){
-        do {
-            if(iterator(arr[i])) {
-                index = i;
-                break;
-            }
-        } while(i--)
-    }
-
-    return index;
-}
-
 define([
     'backbone',
     'collections/districts',
@@ -48,7 +30,23 @@ define([
             events : {
                 'click .submit-search' : 'getResult'
             },
+            /**
+            * Similar to _.find but return the first index of the array matching the iterator
+            **/
+            findIndex :  function(arr, iterator) {
+                var i = arr.length - 1, index = null;
 
+                if(i >= 0){
+                    do {
+                        if(iterator(arr[i])) {
+                            index = i;
+                            break;
+                        }
+                    } while(i--)
+                }
+
+                return index;
+            },
             render: function() {
 
                 var BV = new $.BigVideo();
@@ -146,8 +144,8 @@ define([
 
                         for(var j in coeffs)
                             note_quartier += coeffs[j] * ( parseInt( 
-                                                                findIndex(
-                                                                    districts[i], 
+                                                                this.findIndex(
+                                                                    districts[j], 
                                                                     function(val) { return parseInt(val.id_quartier) == q_id }
                                                                 ) 
                                                             ) + 1 ) / 15;
@@ -173,11 +171,14 @@ define([
                         moyenne += notes[q_id][k];
 
                     moyenne = moyenne / nb_districts; 
-
+                    
                     quartiersCopy.push(_.extend({note : moyenne, note_format : Math.round( moyenne*100) / 10}, quartiers[q_id]));
                 }
                 
                 quartiers = _.sortBy(quartiersCopy, function(q){ return q.note; });
+
+                console.log(quartiers);
+
                 delete quartiersCopy;
 
                 this.bestDistricts = quartiers;
