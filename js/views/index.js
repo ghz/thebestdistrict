@@ -33,14 +33,14 @@ define([
         return  Backbone.View.extend({
             el: '#app',
 
+            nb_quartiers_affiches: 3,
+
             initialize: function()
             {
                 this.districtSortByEducation = new Districts('07fc');
                 this.districtSortByTransport = new Districts('02Pi');
                 this.districtSortByHobbies = new Districts('m58t');
                 this.districtSortByEcology = new Districts('r41k');
-
-                this.nb_quartiers_affiches = 3;
 
                 this.render();
             },
@@ -66,9 +66,7 @@ define([
 
                   var init_value = parseInt($(this).text());
 
-                  $(this)
-                        .siblings('.value')
-                        .text(init_value);
+                  $(this).siblings('.value').text(init_value);
 
                   $(this).empty();
 
@@ -116,17 +114,16 @@ define([
                     });
                 });
             },
-            getResult : function() {
-                this.count = 3;
 
+            getResult : function() {
                 var sliders = $("#sliders .slider");
                 
                 var coeffs = [], 
                     districts = [
-                        this.districtSortByEducation.first().attributes.results,
-                        this.districtSortByTransport.first().attributes.results,
-                        this.districtSortByHobbies.first().attributes.results,
-                        this.districtSortByEcology.first().attributes.results,
+                        this.districtSortByEducation.first().get('results'),
+                        this.districtSortByTransport.first().get('results'),
+                        this.districtSortByHobbies.first().get('results'),
+                        this.districtSortByEcology.first().get('results'),
                     ];
 
                 sliders.each(function(i) {
