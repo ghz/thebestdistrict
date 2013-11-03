@@ -13,54 +13,14 @@ body
 body
   font-family: 'Open Sans', serif
   color: white
-  font-weight: 300
+  font-weight: 100
   overflow-x: hidden
 
+  .main
+    background: rgba(45, 52, 56, 0.89)
+    width: 100%
+    position: absolute
 
-
-.main
-  background: rgba(45, 52, 56, 0.82)
-  height: 100%
-  width: 100%
-  position: absolute
-
-  >header
-    text-align: center
-    margin-top: 15px
-
-    h2
-      text-align: center
-      line-height: 1.8
-      margin: 0
-      font-weight: bold
-      font-family: 'Marck Script', cursive
-      font-size: 3em
-
-      &:before, &:after
-        content: "\00a0"
-        margin: 0 14px
-        font-size: 14px
-        position: relative
-        bottom: 1.5em
-        border-bottom: 1px solid rgba(255, 255, 255, 0.67)
-        width: 103px
-        display: inline-block
-
-    h1
-      font-family: "Josefin Slab",serif
-      font-size: 6em
-      margin: 3px
-      text-transform: uppercase
-      font-weight: 100
-      margin: 0
-      border-bottom: 1px solid rgba(255, 255, 255, 0.33)
-      line-height: 1em
-      padding-bottom: 30px
-
-@media screen and (max-width: 768px)
-  .main > header
-
-    h1
-      font-size: 4em
-    h2
-      font-size: 2em
+    >section
+      width: 90%
+      margin: 0 auto 40px auto

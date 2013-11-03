@@ -18,7 +18,6 @@ var findIndex = function(arr, iterator) {
 
 define([
     'backbone',
-    'models/district',
     'collections/districts',
     'BigVideo',
     'jquery-ui'
@@ -27,7 +26,6 @@ define([
 ],
     function(
         Backbone,
-        District,
         Districts,
         bigvideo,
         jqueryui
@@ -45,19 +43,10 @@ define([
                 this.nb_quartiers_affiches = 3;
 
                 this.render();
-                this._events();
             },
 
             events : {
-                'click .submit-search' : 'getResult',
-            },
-
-            _events : function() {
-                // var self = this;
-                // this.districtSortByEducation.bind('add', this.added, this);
-                // this.districtSortByTransport.bind('add', this.added, this);
-                // this.districtSortByHobbies.bind('add', this.added, this);
-                // this.districtSortByEcology.bind('add', this.added, this);
+                'click .submit-search' : 'getResult'
             },
 
             render: function() {
@@ -74,10 +63,12 @@ define([
                 var availableTotal = 100;
 
                 sliders.each(function() {
-                  
+
                   var init_value = parseInt($(this).text());
 
-                  $(this).siblings('.value').text(init_value);
+                  $(this)
+                        .siblings('.value')
+                        .text(init_value);
 
                   $(this).empty();
 
@@ -89,7 +80,7 @@ define([
                         step: 2,
                         animate: 0,
                         slide: function(event, ui) {
-                          
+
                             // Update display to current value
                             $(this).siblings('.value').text(ui.value);
 
@@ -112,10 +103,10 @@ define([
                                   value = t.slider("option", "value");
 
                               var new_value = value + (delta/2);
-                              
-                              if (new_value < 0 || ui.value == 100) 
+
+                              if (new_value < 0 || ui.value == 100)
                                   new_value = 0;
-                              if (new_value > 100) 
+                              if (new_value > 100)
                                   new_value = 100;
 
                               t.siblings('.value').text(new_value);
@@ -166,15 +157,15 @@ define([
 
                 this.bestDistricts = quartiers;
 
-                this.domDistricts();
+                this.renderDistricts();
 
             },
-            domDistricts : function() {
+
+            renderDistricts : function() {
                 $('#results').empty().append('<ol />');
 
                 for(var i = 0; i < this.nb_quartiers_affiches; i++)
                     $('#results ol').append('<li>'+this.bestDistricts[i]['nom']+' '+ this.bestDistricts[i]['note_format']+'/10</li>');
-                
             }
           
         });

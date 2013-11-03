@@ -22,7 +22,7 @@
             ~~~~~"   "~~~~~~~~~~~~~~~~~~~~~~~~
 
 TheBestDistrict.com - The best way to find a home that really suits us !
-(Fake web app built thanks to stras.io's API builder)
+(Proof of Concept built thanks to stras.io's API builder)
 -->
 <head>
     <title>TheBestDistrict.com</title>
@@ -30,50 +30,12 @@ TheBestDistrict.com - The best way to find a home that really suits us !
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:300,400|Marck+Script|Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Slab:300,400|Marck+Script|Open+Sans:300' rel='stylesheet' type='text/css'>
 
     <link rel="stylesheet" media="screen" href="css/style.css" />
     <style type="text/css">
-    form#search {
-      width:90%;
-      margin:0 auto;
-    }
-    span.value {
-      display: none;
-    }
-    #sliders {
-      margin:0;padding:0;
-      margin-bottom: 50px;
-      list-style-type: none;
-    }
-    #sliders li {
-      margin:0; padding:0;
-    }
-    .submit-search {
-      height: 18px; 
-      line-height: 0px;
-      padding: 17px; 
-      text-align: center; 
-      color: #FFFFFF; 
-      font-size: 18px; 
-      font-weight: bold; 
-      font-style: normal; 
-      text-decoration: none; 
-      background-color: #828282; 
-      border-width: 1px; 
-      border-style: solid; 
-      border-color: #182429; 
-      text-shadow: 0px 1px 0px #263666; 
-      margin:20px auto;
-      display: block;
-    }
-    .submit-search:focus { outline:0; }
 
-    #results {
-      display:block;
-      width: 300px;
-      margin:0 auto;
-    }
+
 
     </style>
     <link rel="stylesheet" type="text/css" href="js/libs/jquery-ui/themes/overcast/jquery-ui.css">
@@ -87,34 +49,45 @@ TheBestDistrict.com - The best way to find a home that really suits us !
             <h2>The</h2>
             <h1>Best District</h1>
         </header>
-        <form method="POST" id="search">
-          <ul id="sliders">
-              <li>
-                  <h4>Education</h4>
-                  <div class="slider">25</div>
-                  <span class="value">0</span>
-              </li>
-              <li>
-                  <h4>Transports</h4>
-                  <div class="slider">25</div>
-                  <span class="value" >0</span>
-              </li>
-              <li>
-                  <h4>Environnement</h4>
-                  <div class="slider">25</div>
-                  <span class="value">0</span>
-              </li>
-              <li>
-                  <h4>Culture et loisirs</h4>
-                  <div class="slider">25</div>
-                  <span class="value">0</span>
-              </li>
-          </ul>
-          <input type="button" class="submit-search" value="Rechercher le quartier qui me correspond !">
-        </form>
-        <div id="results">
+        <section>
+            <h1>Hello!</h1>
+            Choisissez les critères qui compte pour vous !
+            Explication en anglais
+        </section>
+        <section class="content">
+            <h1>How important these criteria for you?</h1>
+            <form method="POST" id="search">
+                <ul id="sliders">
+                    <li>
+                        <h4>Education</h4>
+                        <div class="slider">25</div>
+                        <span class="value">0</span>
+                    </li>
+                    <li>
+                        <h4>Transports</h4>
+                        <div class="slider">25</div>
+                        <span class="value" >0</span>
+                    </li>
+                    <li>
+                        <h4>Environment</h4>
+                        <div class="slider">25</div>
+                        <span class="value">0</span>
+                    </li>
+                    <li>
+                        <h4>Culture et hobbies</h4>
+                        <div class="slider">25</div>
+                        <span class="value">0</span>
+                    </li>
+                </ul>
+          <span type="button" class="submit-search">
+              Find an home that really suits me !
+          </span>
+            </form>
+            <div id="results">
 
-        </div>
+            </div>
+        </section>
+
     </div>
     <script type="text/javascript" data-main="js/main" src="js/require-jquery.js"></script>
     <script>

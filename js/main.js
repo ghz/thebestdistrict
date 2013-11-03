@@ -3,10 +3,7 @@ require.config({
     'paths':
     {
         "underscore": "libs/vendor/underscore",
-        "underscore-string": "libs/vendor/underscore-string",
-        "underscore-deepextend": "libs/vendor/underscore-deepextend",
         "backbone": "libs/vendor/backbone",
-        "backbone-nested": "libs/vendor/backbone-nested",
 
         "videojs": "libs/video-js/video",
         "BigVideo": "libs/BigVideo/lib/bigvideo",
@@ -23,37 +20,20 @@ require.config({
     {
         //Vendor Libs (js/libs/vendor/*)
         //-----------------------------------------
-        'backbone':
-        {
-            'deps': ['jquery', 'underscore', 'underscore-string', 'underscore-deepextend'],
+        'backbone': {
+            'deps': ['jquery', 'underscore'],
             'exports': 'Backbone'
         },
-
-        'backbone-nested':
-        {
-            'deps': ['backbone']
+        'jquery-ui' : {
+            'deps' : ['jquery', 'jquery.touchpunch']
         },
 
-        'underscore-string':
-        {
-            'deps': ['underscore']
-        },
-
-        'underscore-deepextend':
-        {
-            'deps': ['underscore']
-        },
-        'jquery-ui' : { 'deps' : ['jquery', 'jquery.touchpunch'] },
-
-        //jQuery UI Components
-        //----------------------------------------
-
-        //jQueryUI Libs (js/libs/*)
-        //-----------------------------------------
 
         //Ohter Libs (js/libs/*)
-        //-----------------------------------------shim: {
-        "videojs": {exports: 'videojs'}
+        //-----------------------------------------
+        "videojs": {
+            exports: 'videojs'
+        }
     },
 
     //SEE http://requirejs.org/docs/api.html#config-waitSeconds
