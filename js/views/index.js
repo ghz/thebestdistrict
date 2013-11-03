@@ -130,27 +130,55 @@ define([
                     coeffs.push($(this).slider('value') / 100);
                 });
 
-                //Choisir ou rand ?
-                var quartiers = districts[_.random(0, 3)], l = quartiers.length;
+                var nb_districts = districts.length;
+                var notes = {};
 
-                //Sort ?
-                // quartiers = _.sortBy(quartiers, function(q){ return parseInt(q.id_quartier); });
+                //Caclul des notes
+                for (var i = 0; i < nb_districts; i++) {
 
-                //ajout des notes sur es quartiers
-                while(l--) {
-                    var q_id = quartiers[l].id_quartier;
+                    var l = districts[i].length;
 
-                    var note_quartier = 0;
+                    //ajout des notes sur es quartiers
+                    while(l--) {
+                        var q_id = districts[i][l].id_quartier;
 
-                    for(var i in coeffs) {
-                        note_quartier += coeffs[i] * ( findIndex(districts[i], function(val) { return parseInt(val.id_quartier) == q_id }) / 15 );
+                        var note_quartier = 0;
+
+                        for(var j in coeffs)
+                            note_quartier += coeffs[j] * ( parseInt( 
+                                                                findIndex(
+                                                                    districts[i], 
+                                                                    function(val) { return parseInt(val.id_quartier) == q_id }
+                                                                ) 
+                                                            ) + 1 ) / 15;
+
+                        if(typeof notes[q_id] == 'object')
+                            notes[q_id][i] = note_quartier;
+                        else {
+                            notes[q_id] = {};
+                            notes[q_id][i] = note_quartier;
+                        }
+
                     }
 
-                    quartiers[l].note = note_quartier;
-                    quartiers[l].note_format = parseInt(10 - 10*note_quartier);
                 }
 
-                quartiers = _.sortBy(quartiers, function(q){ return q.note; });
+                //Just needed a sorted item
+                var quartiers = _.sortBy(districts[0], function(q){ return parseInt(q.id_quartier); }), quartiersCopy = [];
+
+                for(var q_id in notes) {
+                    var moyenne = 0;
+
+                    for(var k = 0; k < nb_districts; k++)
+                        moyenne += notes[q_id][k];
+
+                    moyenne = moyenne / nb_districts; 
+
+                    quartiersCopy.push(_.extend({note : moyenne, note_format : Math.round( moyenne*100) / 10}, quartiers[q_id]));
+                }
+                
+                quartiers = _.sortBy(quartiersCopy, function(q){ return q.note; });
+                delete quartiersCopy;
 
                 this.bestDistricts = quartiers;
 
@@ -159,10 +187,14 @@ define([
             },
 
             renderDistricts : function() {
-                $('#results').empty().append('<ol />');
+                if(this.bestDistricts.length) {
+                    $('#results').empty().append('<ol />');
 
-                for(var i = 0; i < this.nb_quartiers_affiches; i++)
-                    $('#results ol').append('<li>'+this.bestDistricts[i]['nom']+' '+ this.bestDistricts[i]['note_format']+'/10</li>');
+                    var from = this.bestDistricts.length - 1, to = this.bestDistricts.length - this.nb_quartiers_affiches;
+
+                    for(var i = from; i >= to ; i--)
+                        $('#results ol').append('<li>'+this.bestDistricts[i]['nom']+' '+ this.bestDistricts[i]['note_format']+'/10</li>');
+                }
             }
           
         });
