@@ -4,7 +4,7 @@ define([
 ], function( _, Backbone){
     return Backbone.Collection.extend({
         url: function() {
-            return 'http://api.batcave.stras.io:3001/e/' + this.endpointId;
+            return 'http://api.stras.io/e/' + this.endpointId;
 
         },
         initialize: function(endpointId) {
