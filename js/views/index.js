@@ -177,8 +177,6 @@ define([
                 
                 quartiers = _.sortBy(quartiersCopy, function(q){ return q.note; });
 
-                console.log(quartiers);
-
                 delete quartiersCopy;
 
                 this.bestDistricts = quartiers;
